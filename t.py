@@ -11,7 +11,7 @@ translator = Translator()
 recognizer = sr.Recognizer()
 
 #with sr.WavFile("test.wav") as source:    
-with sr.WavFile("/home/pi/Desktop/ocr_code/test.wav") as source:    
+with sr.WavFile("kot.wav") as source:    
     r = sr.Recognizer()
     # r.adjust_for_ambient_noise(source)
     audio = recognizer.record(source) 
