@@ -10,15 +10,15 @@ import pickle
 
 
 # Load pickle file
-with open("/content/pickle_model_asl.pkl", 'rb') as file:
+with open("pickle_model_asl.pkl", 'rb') as file:
     pickle_model = pickle.load(file)
 
 #loaded_scaler
-with open("/content/pickle_scaler_asl.pkl", 'rb') as file:
+with open("pickle_scaler_asl.pkl", 'rb') as file:
     pickle_scaler = pickle.load(file)
 
 #loaded_label
-with open("/content/pickle_label_asl.pkl", 'rb') as file:
+with open("pickle_label_asl.pkl", 'rb') as file:
     pickle_le = pickle.load(file)
 
 
@@ -34,12 +34,11 @@ def quantify_image(image):
   edges = cv2.Canny(rect_img,100,200)
   features = feature.hog(image, orientations=9,pixels_per_cell=(10, 10), 
                          cells_per_block=(2, 2),transform_sqrt=True, block_norm="L1")
-
   # return the feature vector
   return features
 
 
- #predict Asl
+#predict Asl
 #load image using opencv (donot forget to change this path and add your image path)
 # check if image read
 # convert image color to RGB
@@ -48,12 +47,14 @@ def quantify_image(image):
 #scale features using pickle_scaler object
 # predict label using pickle_model object
 #get class name from pickle_le objecy
-image = cv2.imread("/content/asl/book/2.png")
-if image is not None:
-  image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-  image = cv2.resize(image, (400, 400))
-  fet = quantify_image(image)
-  fet_sca = pickle_scaler.transform([fet])
-  pred = pickle_model.predict(fet_sca)
-  label = pickle_le.classes_[pred[0]]
-  print(label)
+def ai_cap():
+    image = cv2.imread("ai.png")
+    if image is not None:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (400, 400))
+        fet = quantify_image(image)
+        fet_sca = pickle_scaler.transform([fet])
+        pred = pickle_model.predict(fet_sca)
+        label = pickle_le.classes_[pred[0]]
+        print(label)
+        return label
