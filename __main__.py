@@ -12,6 +12,8 @@ import cv2
 from gpiozero import Button
 from time import sleep
 from picamera import PiCamera
+from t import dict
+
 print("before camera")
 camera = PiCamera()
 camera.resolution = (640, 480)
@@ -57,6 +59,16 @@ while True:
         camera.stop_preview()
         try:
             words_to_say = ai_cap()
+            try:
+                if words_to_say in dict:
+                    words_to_say=dict[words_to_say]
+                print(words_to_say)
+                
+                myobj = gTTS(text=words_to_say, lang='ar', slow=False)
+                myobj.save("welcome.mp3")
+                playsound("welcome.mp3")
+            except requests.exceptions.ConnectionError:
+                print("fail to communicate")   
         except requests.exceptions.ConnectionError:
             print("fail to communicate")
     if not words_to_say is None and len(words_to_say) > 0:

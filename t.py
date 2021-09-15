@@ -39,3 +39,13 @@ print(bidi_text ,x )
 # bidi_text_2 = get_display(reshaped_text)   
 # print(bidi_text_2 )
 
+dict = {
+    "hello":"مرحبا",
+    "Federation":"اتحاد",
+    "Here are you":"اتفضل",
+    "Egypt":"مصر",
+    "Eat":"يأكل",
+    "Close":"يغلق",
+    "Book":"كتاب",
+    "I":"انا",
+}
