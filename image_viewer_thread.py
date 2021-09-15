@@ -19,7 +19,9 @@ class ImageViewer(Thread):
                 words_to_say = self.__buffer.popleft()
                 if len(words_to_say):
                     words = words_to_say.split()
+                    print(words)
                     for word in words:
+                        print(word)
                         target_path = os.path.join(os.getcwd(), "images", f"{word}.bmp")
                         print(target_path)
                         if os.path.isfile(target_path):
