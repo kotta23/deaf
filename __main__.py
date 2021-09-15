@@ -13,6 +13,9 @@ from gpiozero import Button
 from time import sleep
 from picamera import PiCamera
 from t import dict
+import requests
+from gtts import gTTS
+from playsound import playsound
 
 print("before camera")
 camera = PiCamera()
@@ -21,11 +24,13 @@ print("after cam.....")
 B1_PIN  = 20
 B2_PIN  = 21
 # assign physically
-B3_PIN  = 23
+B3_PIN  = 12
+B4_PIN  = 16
 
 b1 = Button(B1_PIN, pull_up=True, bounce_time=0.1)
 b2 = Button(B2_PIN, pull_up=True, bounce_time=0.1)
 b3 = Button(B3_PIN, pull_up=True, bounce_time=0.1)
+b4 = Button(B3_PIN, pull_up=True, bounce_time=0.1)
 
 images_container = Queue(3)
 #cam = Camera(images_container)
@@ -59,18 +64,21 @@ while True:
         camera.stop_preview()
         try:
             words_to_say = ai_cap()
-            try:
-                if words_to_say in dict:
-                    words_to_say=dict[words_to_say]
-                print(words_to_say)
-                
-                myobj = gTTS(text=words_to_say, lang='ar', slow=False)
-                myobj.save("welcome.mp3")
-                playsound("welcome.mp3")
-            except requests.exceptions.ConnectionError:
-                print("fail to communicate")   
+
         except requests.exceptions.ConnectionError:
             print("fail to communicate")
+    elif b4.is_pressed:
+        try:
+            words_to_say = ai_cap()
+            if words_to_say in dict:
+                words_to_say=dict[words_to_say]
+            print(words_to_say)
+            
+            myobj = gTTS(text=words_to_say, lang='ar', slow=False)
+            myobj.save("welcome.mp3")
+            playsound("welcome.mp3")
+        except requests.exceptions.ConnectionError:
+            print("fail to communicate")   
     if not words_to_say is None and len(words_to_say) > 0:
         print(words_to_say)
         image_viewer.add_cmd(words_to_say)
