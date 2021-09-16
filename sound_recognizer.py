@@ -22,9 +22,9 @@ def recognize_speech_from_mic():
         "transcription": None
     }
     try:
-        #word_to_say_0 = get_display(arabic_reshaper.reshape(str(recognizer.recognize_google(audio, language="ar-EG"))))
-        word_to_say_0 = recognizer.recognize_google(audio)
-        print(word_to_say_0)
+        word_to_say_0 = get_display(arabic_reshaper.reshape(str(recognizer.recognize_google(audio, language="ar-EG"))))
+        #word_to_say_0 = recognizer.recognize_google(audio)
+        #print(word_to_say_0)
         response["transcription"] = word_to_say_0
         
     except sr.RequestError:
@@ -35,8 +35,11 @@ def recognize_speech_from_mic():
         # speech was unintelligible
         response["error"] = "Unable to recognize speech"
     return response
-words_to_say = recognize_speech_from_mic().get('transcription')
-from image_viewer_thread import ImageViewer
-image_viewer = ImageViewer()
-image_viewer.start()
-image_viewer.add_cmd(words_to_say)
+
+
+
+# words_to_say = recognize_speech_from_mic().get('transcription')
+# from image_viewer_thread import ImageViewer
+# image_viewer = ImageViewer()
+# image_viewer.start()
+# image_viewer.add_cmd(words_to_say , True)

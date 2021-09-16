@@ -38,7 +38,7 @@ images_container = Queue(3)
 print("after btns")
 image_viewer = ImageViewer()
 image_viewer.start()
-
+ar = False
 while True:
     
     words_to_say = ""
@@ -56,17 +56,21 @@ while True:
     elif b2.is_pressed:
         print("b2 is pressed")
         words_to_say = recognize_speech_from_mic().get('transcription')
+        ar = False
     elif b3.is_pressed:
-        print("b3 is pressed")
-        camera.start_preview()
-        sleep(5)
-        camera.capture('ai.png')
-        camera.stop_preview()
-        try:
-            words_to_say = ai_cap()
+        print("b2 is pressed")
+        words_to_say = recognize_speech_from_mic().get('transcription_arb')
+        ar = True
+        # print("b3 is pressed")
+        # camera.start_preview()
+        # sleep(5)
+        # camera.capture('ai.png')
+        # camera.stop_preview()
+        # try:
+        #     words_to_say = ai_cap()
 
-        except requests.exceptions.ConnectionError:
-            print("fail to communicate")
+        # except requests.exceptions.ConnectionError:
+        #     print("fail to communicate")
     elif b4.is_pressed:
         try:
             words_to_say = ai_cap()
@@ -81,7 +85,7 @@ while True:
             print("fail to communicate")   
     if not words_to_say is None and len(words_to_say) > 0:
         print("the word is      :",words_to_say)
-        image_viewer.add_cmd(words_to_say)
+        image_viewer.add_cmd(words_to_say ,ar)
         print("press any key again..")
 
 
